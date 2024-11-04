@@ -1,10 +1,10 @@
 <nav
-  class="text-white gap-4 top-0 w-full flex justify-between items-center px-2 py-3 bg-slate-900 shadow-md"
+  class="gap-4 top-0 w-full flex justify-between items-center px-2 py-3 shadow-md"
 >
   <div>
     <a
       class="hover:underline"
-      routerLinkActive="text-blue-500 underline pr-2"
+      routerLinkActive="text-primary underline pr-2"
       [routerLink]="['/home']"
       >
       Home
@@ -12,7 +12,7 @@
 
     <a
       class="hover:underline"
-      routerLinkActive="text-blue-500 underline"
+      routerLinkActive="text-primary underline"
       [routerLink]="['/buy']"
       >
       Comprar Criptomonedas
@@ -21,16 +21,19 @@
   </div>
 
   @if (isLoggedIn) {
-    <div class="flex items-center gap-2">
-      <span>
-        Bienvenido, {{ user?.displayName }}
-      </span>
-
-      <img
+    <div>
+      <div class="flex items-center gap-2">
+        <span>{{ user?.displayName }}</span>
+        
+        <img
         class="w-8 h-8 rounded-full"
         [src]="user?.photoURL"
         alt="Foto de perfil"
-      />
+        />
+      
+      </div>
+
+      <span>Tu saldo es: {{ balance | currency }} USD</span>
 
     </div>
   }
@@ -42,7 +45,7 @@
       (click)="loginWithGoogle()"
       />
 
-    <form (submit)="loginWithEmail(email.value, password.value)">
+    <!-- <form (submit)="loginWithEmail(email.value, password.value)">
       <input class="text-black" type="email" #email placeholder="Email" required />
 
       <input class="text-black" type="password" #password placeholder="Password" required />
@@ -56,7 +59,7 @@
       <input class="text-black" type="password" #password placeholder="Password" required />
 
       <app-button label="Registrarse" type="submit" />
-    </form>
+    </form> -->
 
   } @else if (isLoggedIn) {
     <app-button

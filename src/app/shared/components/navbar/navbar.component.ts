@@ -4,11 +4,12 @@ import { auth, provider, signInWithPopup, createUserWithEmailAndPassword, signIn
 import { onAuthStateChanged, signOut, User } from 'firebase/auth';
 import { Firestore, getDocs, collection, query, where } from '@angular/fire/firestore';
 import { ButtonComponent } from "../../../components/ui/button/button.component";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, ButtonComponent],
+  imports: [RouterLink, RouterLinkActive, ButtonComponent, CommonModule],
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent implements OnInit {
@@ -17,6 +18,7 @@ export class NavbarComponent implements OnInit {
 
   isLoggedIn = false;
   user: User | null = null;
+  balance: number | null = null;
 
   ngOnInit() {
     onAuthStateChanged(auth, (user) => {
@@ -39,6 +41,7 @@ export class NavbarComponent implements OnInit {
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
       console.log(doc.id, " => ", doc.data());
+      this.balance = doc.data()['balance'];
     });
 
   }
