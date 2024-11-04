@@ -1,0 +1,9 @@
+<ul>
+  @for (crypto of CryptoData; track crypto.name) {
+    <li>
+      {{ crypto.name }}: {{ crypto.current_price }} USD
+    </li>
+  } @empty {
+    <li>No data available</li>
+  }
+</ul>
