@@ -1,0 +1,68 @@
+<nav
+  class="text-white gap-4 top-0 w-full flex justify-between items-center px-2 py-3 bg-slate-900 shadow-md"
+>
+  <div>
+    <a
+      class="hover:underline"
+      routerLinkActive="text-blue-500 underline pr-2"
+      [routerLink]="['/home']"
+      >
+      Home
+    </a>
+
+    <a
+      class="hover:underline"
+      routerLinkActive="text-blue-500 underline"
+      [routerLink]="['/buy']"
+      >
+      Comprar Criptomonedas
+    </a>
+    
+  </div>
+
+  @if (isLoggedIn) {
+    <div class="flex items-center gap-2">
+      <span>
+        Bienvenido, {{ user?.displayName }}
+      </span>
+
+      <img
+        class="w-8 h-8 rounded-full"
+        [src]="user?.photoURL"
+        alt="Foto de perfil"
+      />
+
+    </div>
+  }
+
+  @if (!isLoggedIn) {
+    <app-button
+      label="Iniciar sesión con Google"
+      class="hover:underline"
+      (click)="loginWithGoogle()"
+      />
+
+    <form (submit)="loginWithEmail(email.value, password.value)">
+      <input class="text-black" type="email" #email placeholder="Email" required />
+
+      <input class="text-black" type="password" #password placeholder="Password" required />
+
+      <app-button label='Iniciar sesión' type="submit" />
+    </form>
+
+    <form (submit)="signUpWithEmail(email.value, password.value)">
+      <input class="text-black" type="email" #email placeholder="Email" required />
+
+      <input class="text-black" type="password" #password placeholder="Password" required />
+
+      <app-button label="Registrarse" type="submit" />
+    </form>
+
+  } @else if (isLoggedIn) {
+    <app-button
+      label="Cerrar sesión"
+      class="hover:underline"
+      (click)="logout()"
+      />
+  }
+</nav>
