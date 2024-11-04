@@ -45,10 +45,10 @@ export class BuyCryptoPageComponent implements OnInit {
   constructor(private coinGeckoService: CoinGeckoService) {}
 
   ngOnInit(): void {
-    // this.fetchCryptoData();
-    this.cryptoData = [
-      this.mockCrypto,
-    ];
+    this.fetchCryptoData();
+    // this.cryptoData = [
+    //   this.mockCrypto,
+    // ];
   }
 
   fetchCryptoData(): void {

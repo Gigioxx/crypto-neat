@@ -13,6 +13,12 @@
   </div>
 
   <span>{{ crypto.current_price | currency:'USD':'symbol':'1.0-0' }} USD</span>
+  <span [ngClass]="{
+    'text-success': crypto.price_change_percentage_24h > 0,
+    'text-error': crypto.price_change_percentage_24h < 0
+  }">
+    {{ crypto.price_change_percentage_24h | number:'1.2-2' }}%
+  </span>
   
 </div>
 
