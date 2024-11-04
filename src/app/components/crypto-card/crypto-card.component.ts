@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CryptoResponse } from '../../interfaces/crypto.interfaces';
 import { CommonModule } from '@angular/common';
+import { CryptoService } from '../../services/crypto/crypto.service';
 
 @Component({
   selector: 'app-crypto-card',
@@ -9,6 +10,9 @@ import { CommonModule } from '@angular/common';
   templateUrl: './crypto-card.component.html',
 })
 export class CryptoCardComponent {
+
+  constructor(private cryptoService: CryptoService) {}
+
   @Input() crypto: CryptoResponse = {
     id: '',
     symbol: '',
@@ -37,5 +41,23 @@ export class CryptoCardComponent {
     roi: null,
     last_updated: ''
   };
+
+  buyCrypto() {
+    const payload = {
+      email: 'guillermo.casanova.b@gmail.com',
+      userBalance: 61743,
+      crypto: this.crypto.symbol,
+      amount: 1,
+      currentPrice: this.crypto.current_price
+    }
+    this.cryptoService.buyCrypto(payload).subscribe({
+      next: (response) => {
+        console.log('Transaction completed');
+      },
+      error: (error) => {
+        console.error('Error processing transaction');
+      }
+    });
+  }
 
 }

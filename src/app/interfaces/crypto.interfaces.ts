@@ -32,7 +32,7 @@ export type CryptoResponse = {
 export type CryptoResponseArray = CryptoResponse[];
 
 export interface buySellCryptoPayload {
-  user: User,
+  email: string,
   userBalance: number,
   crypto: string,
   amount: number,
