@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { auth, provider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '../../../../firebase-config';
-import { onAuthStateChanged, signOut, User } from 'firebase/auth';
-import { Firestore, getDocs, collection, query, where } from '@angular/fire/firestore';
+import { getAdditionalUserInfo, onAuthStateChanged, signOut, User } from 'firebase/auth';
+import { Firestore, addDoc, getDocs, collection, query, where } from '@angular/fire/firestore';
 import { ButtonComponent } from "../../../components/ui/button/button.component";
 import { CommonModule } from '@angular/common';
+import { generateRandomNumber } from '../../../utils/generateRandomNumber';
 
 @Component({
   selector: 'app-navbar',
@@ -18,21 +19,20 @@ export class NavbarComponent implements OnInit {
 
   isLoggedIn = false;
   user: User | null = null;
-  balance: number | null = null;
+  balance: number = 0;
 
   ngOnInit() {
     onAuthStateChanged(auth, (user) => {
       this.isLoggedIn = !!user;
       this.user = user;
   
-      if (user) {
-        this.fetchUserBalance(user.email!);
+      if (user && user.email) {
+        this.fetchUserBalance(user.email);
       }
     });
   }
   
   async fetchUserBalance(email: string) {
-
     const usersBalanceCollection = collection(this.firestore, 'usersBalance');
 
     const q = query(usersBalanceCollection, where('userEmail', '==', email));
@@ -43,13 +43,27 @@ export class NavbarComponent implements OnInit {
       console.log(doc.id, " => ", doc.data());
       this.balance = doc.data()['balance'];
     });
+  }
 
+  async setUserBalance(email: string) {
+    const usersBalanceCollection = collection(this.firestore, 'usersBalance');
+
+    const docRef = await addDoc(usersBalanceCollection, {
+      balance: generateRandomNumber(100, 100000),
+      userEmail: email,
+    });
+
+    console.log('Document written with ID: ', docRef.id);
   }
 
   loginWithGoogle() {
     signInWithPopup(auth, provider)
       .then((result) => {
-        console.log('User signed in:', result.user);
+        if (getAdditionalUserInfo(result)?.isNewUser) {
+          if (result.user.email) {
+            this.setUserBalance(result.user.email);
+          }
+        }
       })
       .catch((error) => {
         console.error('Error during sign in:', error);
