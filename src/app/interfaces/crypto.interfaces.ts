@@ -1,3 +1,5 @@
+import { User } from "firebase/auth";
+
 export type CryptoResponse = {
   id:                               string;
   symbol:                           string;
@@ -28,3 +30,11 @@ export type CryptoResponse = {
 }
 
 export type CryptoResponseArray = CryptoResponse[];
+
+export interface buySellCryptoPayload {
+  user: User,
+  userBalance: number,
+  crypto: string,
+  amount: number,
+  currentPrice: number,
+}

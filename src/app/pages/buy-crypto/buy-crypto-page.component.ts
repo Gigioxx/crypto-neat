@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CryptoListComponent } from '../../components/crypto-list/crypto-list.component';
 import { CryptoResponseArray } from '../../interfaces/crypto.interfaces';
-import { CoinGeckoService } from '../../services/coinGecko.service';
+import { CoinGeckoService } from '../../services/coinGecko/coinGecko.service';
 
 @Component({
   selector: 'app-buy-crypto-page',
