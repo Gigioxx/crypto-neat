@@ -48,8 +48,6 @@ export class BuyCryptoPageComponent implements OnInit {
     // this.fetchCryptoData();
     this.cryptoData = [
       this.mockCrypto,
-      this.mockCrypto,
-      this.mockCrypto,
     ];
   }
 
