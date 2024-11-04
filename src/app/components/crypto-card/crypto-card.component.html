@@ -1,4 +1,4 @@
-<div class="p-5 font-bold border-2 border-[#DBE9FC] rounded-xl max-w-[150px]">
+<div class="p-5 font-bold border-2 border-[#DBE9FC] rounded-xl max-w-[150px] w-full h-full flex flex-col justify-between">
   <div class="mb-[30px]">
     <div class="flex items-center">
       <img
@@ -17,10 +17,6 @@
     'text-success': crypto.price_change_percentage_24h > 0,
     'text-error': crypto.price_change_percentage_24h < 0
   }">
-    {{ crypto.price_change_percentage_24h | number:'1.2-2' }}%
+    24h: {{ crypto.price_change_percentage_24h | number:'1.2-2' }}%
   </span>
-  
 </div>
-
-
-
