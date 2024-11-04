@@ -1,7 +1,7 @@
 <ul>
-  @for (crypto of CryptoData; track crypto.name) {
+  @for (crypto of cryptoData; track crypto.name) {
     <li>
-      {{ crypto.name }}: {{ crypto.current_price }} USD
+      <app-crypto-card [crypto]='crypto'></app-crypto-card>
     </li>
   } @empty {
     <li>No data available</li>

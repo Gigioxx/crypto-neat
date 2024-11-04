@@ -1,0 +1,20 @@
+<div class="p-5 font-bold border-2 border-[#DBE9FC] rounded-xl max-w-[150px]">
+  <div class="mb-[30px]">
+    <div class="flex items-center">
+      <img
+      class="w-5 h-5 rounded-full mr-[14px]"
+      [src]="crypto.image"
+      alt="Imagen de crypto"
+      />
+      
+      <span>{{ crypto.symbol | uppercase }}</span>
+    </div>
+    <span class='text-[#9D9FC2] mt-2'>{{ crypto.name }}</span>
+  </div>
+
+  <span>{{ crypto.current_price | currency:'USD':'symbol':'1.0-0' }} USD</span>
+  
+</div>
+
+
+
