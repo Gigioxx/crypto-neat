@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { auth, provider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '../../../../firebase-config';
 import { getAdditionalUserInfo, onAuthStateChanged, signOut, User } from 'firebase/auth';
-import { Firestore, addDoc, getDocs, collection, query, where } from '@angular/fire/firestore';
+import { Firestore, getDocs, collection, query, where, setDoc, doc } from '@angular/fire/firestore';
 import { ButtonComponent } from "../../../components/ui/button/button.component";
 import { CommonModule } from '@angular/common';
 import { generateRandomNumber } from '../../../utils/generateRandomNumber';
@@ -46,14 +46,10 @@ export class NavbarComponent implements OnInit {
   }
 
   async setUserBalance(email: string) {
-    const usersBalanceCollection = collection(this.firestore, 'usersBalance');
-
-    const docRef = await addDoc(usersBalanceCollection, {
+    const docRef = await setDoc(doc(this.firestore, `usersBalance/${email}`), {
       balance: generateRandomNumber(100, 100000),
       userEmail: email,
     });
-
-    console.log('Document written with ID: ', docRef.id);
   }
 
   loginWithGoogle() {
