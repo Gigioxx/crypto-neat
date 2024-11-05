@@ -46,13 +46,9 @@ export class CryptoCardComponent implements OnInit {
   };
 
   userEmail: string = '';
-  userBalance: number = 10000;
-
-  constructor(private cryptoService: CryptoService, private userService: UserService) {}
 
   ngOnInit() {
     this.getUserEmail();
-    this.getUserBalance();
   }
 
   getUserEmail(): void {
@@ -61,11 +57,6 @@ export class CryptoCardComponent implements OnInit {
     });
   }
 
-  getUserBalance(): void {
-    this.userService.getUserBalance(this.userEmail).then(balance => {
-      this.userBalance = balance;
-    });
-  }
 
   openModal() {
     this.cryptoModal.open();

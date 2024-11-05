@@ -4,6 +4,7 @@ import { buySellCryptoPayload, CryptoResponse } from '../../interfaces/crypto.in
 import { mockCrypto } from '../../constants/constants';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../ui/button/button.component';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-crypto-modal',
@@ -14,14 +15,15 @@ import { ButtonComponent } from '../ui/button/button.component';
 export class CryptoModalComponent {
   @Input() crypto: CryptoResponse = mockCrypto;
   @Input() email: string = '';
-  @Input() userBalance: number = 10000;
   isVisible: boolean = false;
   isLoading: boolean = false;
+  userBalance: number = 0;
 
-  constructor(private cryptoService: CryptoService) {}
+  constructor(private cryptoService: CryptoService, private userService: UserService) {}
 
-  open() {
+  async open() {
     this.isVisible = true;
+    this.userBalance = await this.userService.getUserBalance(this.email);
   }
 
   close() {
@@ -39,6 +41,7 @@ export class CryptoModalComponent {
   }
 
   buyCrypto() {
+    console.log(this.userBalance)
     this.isLoading = true;
     const payload = this.createPayload();
     this.cryptoService.buyCrypto(payload).subscribe({
