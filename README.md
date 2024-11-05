@@ -5,6 +5,7 @@ This is a web application that allows users to login and check cryptocurrency pr
 
 The app is also a PWA, so, you can download it and use it.
 The session will expire after 10 mins.
+The biometric credentials when buying crypto are not totally implemented, but the logic is there.
 
 ## Running the application
 To run the application, you need to have Node.js installed on your machine. You can download Node.js from [here](https://nodejs.org/en/).
