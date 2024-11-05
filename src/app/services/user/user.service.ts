@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { collection, Firestore, getDocs, where, query, setDoc, doc } from '@angular/fire/firestore';
+import { collection, Firestore, getDocs, where, query, setDoc, doc, orderBy } from '@angular/fire/firestore';
 import { generateRandomNumber } from '../../utils/generateRandomNumber';
 import { userTransactionsList } from '../../interfaces/user.interfaces';
 
@@ -32,7 +32,8 @@ export class UserService {
   async getUserTransactions(email: string): Promise<userTransactionsList> {
     const transactions: any[] = [];
     const usersTransactionsCollection = collection(this.firestore, 'transactionHistory');
-    const q = query(usersTransactionsCollection, where('userEmail', '==', email));
+    // An index was created in firebase for this query :)
+    const q = query(usersTransactionsCollection, where('userEmail', '==', email), orderBy('date', 'desc'));
     
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
