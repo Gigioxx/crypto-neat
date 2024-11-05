@@ -32,3 +32,5 @@ The application will be running on [http://localhost:4200](http://localhost:4200
 - CoinGecko API
 
 ## Screenshots
+<img width="1800" alt="Screenshot 2024-11-05 at 2 54 58 AM" src="https://github.com/user-attachments/assets/9bb1fd0d-4c4f-4491-aa77-a8c0c11b9fef">
+<img width="1800" alt="Screenshot 2024-11-05 at 2 55 15 AM" src="https://github.com/user-attachments/assets/7d224de0-419d-4559-9a7c-33d53823ccff">
