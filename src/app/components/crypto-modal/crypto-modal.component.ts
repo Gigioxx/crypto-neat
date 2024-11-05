@@ -14,8 +14,9 @@ import { ButtonComponent } from '../ui/button/button.component';
 export class CryptoModalComponent {
   @Input() crypto: CryptoResponse = mockCrypto;
   @Input() email: string = '';
-  @Input() userBalance: number = 0;
+  @Input() userBalance: number = 10000;
   isVisible: boolean = false;
+  isLoading: boolean = false;
 
   constructor(private cryptoService: CryptoService) {}
 
@@ -37,17 +38,35 @@ export class CryptoModalComponent {
     };
   }
 
-  buyCrypto() {
+  async buyCrypto() {
+    this.isLoading = true;
     const payload = this.createPayload();
-    this.cryptoService.buyCrypto(payload);
-    this.close();
-    window.alert('Crypto bought successfully');
+    try {
+      await this.cryptoService.buyCrypto(payload);
+      window.alert('Crypto bought successfully');
+    } catch (error) {
+      window.alert('Failed to buy crypto');
+    } finally {
+      setTimeout(() => {
+        this.isLoading = false;
+        this.close();
+      }, 3000);
+    }
   }
 
-  sellCrypto() {
+  async sellCrypto() {
+    this.isLoading = true;
     const payload = this.createPayload();
-    this.cryptoService.sellCrypto(payload);
-    this.close();
-    window.alert('Crypto sold successfully');
+    try {
+      await this.cryptoService.sellCrypto(payload);
+      window.alert('Crypto sold successfully');
+    } catch (error) {
+      window.alert('Failed to sell crypto');
+    } finally {
+      setTimeout(() => {
+        this.isLoading = false;
+        this.close();
+      }, 3000);
+    }
   }
 }

@@ -13,6 +13,11 @@
           <app-button label="Comprar" (click)="buyCrypto()" />
           <app-button label="Vender" (click)="sellCrypto()" />
       </div>
+      @if (isLoading) {
+        <div>
+          <img src="/assets/images/loading.gif" alt="Loading" />
+        </div>
+      }
     </div>
   </div>
 }
