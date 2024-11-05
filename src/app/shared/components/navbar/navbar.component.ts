@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { auth, provider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '../../../../firebase-config';
 import { getAdditionalUserInfo, onAuthStateChanged, signOut, User } from 'firebase/auth';
-import { Firestore, getDocs, collection, query, where, setDoc, doc } from '@angular/fire/firestore';
 import { ButtonComponent } from "../../../components/ui/button/button.component";
 import { CommonModule } from '@angular/common';
-import { generateRandomNumber } from '../../../utils/generateRandomNumber';
+import { UserService } from '../../../services/user/user.service';
+import { Observable, from } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -15,11 +15,11 @@ import { generateRandomNumber } from '../../../utils/generateRandomNumber';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private firestore: Firestore) {}
+  constructor(private userService: UserService) {}
 
   isLoggedIn = false;
   user: User | null = null;
-  balance: number = 0;
+  balance$: Observable<number> = new Observable<number>();
 
   ngOnInit() {
     onAuthStateChanged(auth, (user) => {
@@ -27,28 +27,8 @@ export class NavbarComponent implements OnInit {
       this.user = user;
   
       if (user && user.email) {
-        this.fetchUserBalance(user.email);
+        this.balance$ = from(this.userService.getUserBalance(user.email));
       }
-    });
-  }
-  
-  async fetchUserBalance(email: string) {
-    const usersBalanceCollection = collection(this.firestore, 'usersBalance');
-
-    const q = query(usersBalanceCollection, where('userEmail', '==', email));
-    
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, " => ", doc.data());
-      this.balance = doc.data()['balance'];
-    });
-  }
-
-  async setUserBalance(email: string) {
-    const docRef = await setDoc(doc(this.firestore, `usersBalance/${email}`), {
-      balance: generateRandomNumber(100, 100000),
-      userEmail: email,
     });
   }
 
@@ -57,7 +37,7 @@ export class NavbarComponent implements OnInit {
       .then((result) => {
         if (getAdditionalUserInfo(result)?.isNewUser) {
           if (result.user.email) {
-            this.setUserBalance(result.user.email);
+            this.userService.setUserBalance(result.user.email);
           }
         }
       })
