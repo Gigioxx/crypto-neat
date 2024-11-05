@@ -1,11 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { CryptoResponse } from '../../interfaces/crypto.interfaces';
 import { mockCrypto } from '../../constants/constants';
+import { CommonModule } from '@angular/common';
+import { ButtonComponent } from '../ui/button/button.component';
 
 @Component({
   selector: 'app-crypto-modal',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, ButtonComponent],
   templateUrl: './crypto-modal.component.html',
 })
 export class CryptoModalComponent {
@@ -20,5 +22,14 @@ export class CryptoModalComponent {
 
   close() {
     this.isVisible = false;
+  }
+
+  buyCrypto() {
+    // Implement the logic to buy crypto
+    console.log('Buying crypto...');
+  }
+
+  sellCrypto() {
+    console.log('Selling crypto...')
   }
 }
