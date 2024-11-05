@@ -35,6 +35,6 @@ export interface buySellCryptoPayload {
   email: string,
   userBalance: number,
   crypto: string,
-  amount: number,
+  cryptoAmount: number,
   currentPrice: number,
 }

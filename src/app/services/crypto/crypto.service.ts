@@ -12,7 +12,7 @@ export class CryptoService {
 
   buyCrypto(payload: buySellCryptoPayload): Observable<any> {
     return new Observable(observer => {
-      const validationError = this.validateTransaction(payload.userBalance, payload.amount, payload.currentPrice, 'buy');
+      const validationError = this.validateTransaction(payload.userBalance, payload.cryptoAmount, payload.currentPrice, 'buy');
 
       if (validationError) {
         observer.error(validationError);
@@ -22,7 +22,7 @@ export class CryptoService {
       // Simulate API call with 3s timeout
       setTimeout(async () => {
         try {
-          await this.updateUserBalance(payload.email, payload.userBalance - (payload.currentPrice * payload.amount));
+          await this.updateUserBalance(payload.email, payload.userBalance - (payload.currentPrice * payload.cryptoAmount));
           await this.createTransaction('buy', payload);
           console.log('transacción creada');
           
@@ -38,7 +38,7 @@ export class CryptoService {
   sellCrypto(payload: buySellCryptoPayload): Observable<any> {
     return new Observable(observer => {
 
-      const validationError = this.validateTransaction(payload.userBalance, payload.amount, payload.currentPrice, 'sell');
+      const validationError = this.validateTransaction(payload.userBalance, payload.cryptoAmount, payload.currentPrice, 'sell');
       if (validationError) {
         observer.error(validationError);
         return;
@@ -47,7 +47,7 @@ export class CryptoService {
       // Simulate API call with 3s timeout
       setTimeout(async () => {
         try {
-          await this.updateUserBalance(payload.email, payload.userBalance + (payload.currentPrice * payload.amount));
+          await this.updateUserBalance(payload.email, payload.userBalance + (payload.currentPrice * payload.cryptoAmount));
           await this.createTransaction('sell', payload);
           
           observer.next({ success: true });
@@ -89,10 +89,10 @@ export class CryptoService {
       action,
       crypto: payload.crypto,
       price: payload.currentPrice,
-      balanceUsed: payload.currentPrice * payload.amount,
+      balanceUsed: payload.currentPrice * payload.cryptoAmount,
       userEmail: payload.email,
       date: new Date().toISOString(),
-      quantity: payload.amount,
+      quantity: payload.cryptoAmount,
     });
   }
 }
