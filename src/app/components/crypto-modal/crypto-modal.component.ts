@@ -38,35 +38,37 @@ export class CryptoModalComponent {
     };
   }
 
-  async buyCrypto() {
+  buyCrypto() {
     this.isLoading = true;
     const payload = this.createPayload();
-    try {
-      await this.cryptoService.buyCrypto(payload);
-      window.alert('Crypto bought successfully');
-    } catch (error) {
-      window.alert('Failed to buy crypto');
-    } finally {
-      setTimeout(() => {
-        this.isLoading = false;
-        this.close();
-      }, 3000);
-    }
+    this.cryptoService.buyCrypto(payload).subscribe({
+      next: () => {
+        window.alert('Crypto bought successfully');
+      },
+      error: (error) => {
+        window.alert('Failed to buy crypto: ' + error);
+      },
+      complete: () => {
+          this.isLoading = false;
+          this.close();
+      }
+    });
   }
 
-  async sellCrypto() {
+  sellCrypto() {
     this.isLoading = true;
     const payload = this.createPayload();
-    try {
-      await this.cryptoService.sellCrypto(payload);
-      window.alert('Crypto sold successfully');
-    } catch (error) {
-      window.alert('Failed to sell crypto');
-    } finally {
-      setTimeout(() => {
-        this.isLoading = false;
-        this.close();
-      }, 3000);
-    }
+    this.cryptoService.sellCrypto(payload).subscribe({
+      next: () => {
+        window.alert('Crypto sold successfully');
+      },
+      error: (error) => {
+        window.alert('Failed to sell crypto: ' + error);
+      },
+      complete: () => {
+          this.isLoading = false;
+          this.close();
+      }
+    });
   }
 }
