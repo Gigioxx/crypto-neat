@@ -40,8 +40,44 @@ export class CryptoModalComponent {
     };
   }
 
+  async requestBiometricAuthentication(): Promise<boolean | undefined> {
+    if (!window.PublicKeyCredential) {
+      console.error("WebAuthn is not supported in this browser.");
+      return false;
+    }
+
+    const publicKeyCredentialRequestOptions: PublicKeyCredentialRequestOptions = {
+      challenge: new Uint8Array([/* server-generated challenge */]),
+      allowCredentials: [{
+        id: new Uint8Array([/* user credential ID */]),
+        type: "public-key",
+        // transports: ["usb", "nfc", "ble", "internal"]
+        transports: ['hybrid']
+      }],
+      timeout: 60000,
+      userVerification: "required"
+    };
+
+    try {
+      const credential = await navigator.credentials.get({
+        publicKey: publicKeyCredentialRequestOptions
+      });
+
+      if (credential) {
+        console.log("Biometric authentication successful", credential);
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error("Biometric authentication failed", error);
+      return false;
+    }
+  }
+
   buyCrypto() {
     console.log(this.userBalance)
+    this.requestBiometricAuthentication();
     this.isLoading = true;
     const payload = this.createPayload();
     this.cryptoService.buyCrypto(payload).subscribe({
