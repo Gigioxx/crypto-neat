@@ -47,6 +47,7 @@ export class CryptoModalComponent {
       },
       error: (error) => {
         window.alert('Failed to buy crypto: ' + error);
+        this.isLoading = false;
       },
       complete: () => {
           this.isLoading = false;
@@ -64,6 +65,7 @@ export class CryptoModalComponent {
       },
       error: (error) => {
         window.alert('Failed to sell crypto: ' + error);
+        this.isLoading = false;
       },
       complete: () => {
           this.isLoading = false;
