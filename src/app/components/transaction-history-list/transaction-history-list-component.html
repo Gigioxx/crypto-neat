@@ -1,0 +1,15 @@
+<div class="transaction-history-list">
+  <h2>Transaction History</h2>
+  {{ transactions | json }}
+  <ul>
+    @for (transaction of transactions; track transaction.date) {
+      <li>
+        <div class="transaction-item">
+          <p><strong>Date:</strong> {{ transaction.date }}</p>
+          <p><strong>Quantity:</strong> {{ transaction.quantity }}</p>
+          <p><strong>Crypto:</strong> {{ transaction.crypto }}</p>
+        </div>
+      </li>
+    }
+  </ul>
+</div>

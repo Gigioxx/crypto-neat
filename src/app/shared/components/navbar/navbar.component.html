@@ -17,6 +17,14 @@
       >
       Comprar Criptomonedas
     </a>
+
+    <a
+      class="hover:underline"
+      routerLinkActive="text-primary underline"
+      [routerLink]="['/history']"
+      >
+      Transacciones
+    </a>
     
   </div>
 
@@ -33,7 +41,7 @@
       
       </div>
 
-      <span>Tu saldo es: {{ balance | currency:'USD':'symbol':'1.0-0' }} USD</span>
+      <span>Tu saldo es: {{ (balance$ | async) | currency:'USD':'symbol':'1.0-0' }} USD</span>
 
     </div>
   }
