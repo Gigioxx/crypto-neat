@@ -1,17 +1,19 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { CryptoResponse } from '../../interfaces/crypto.interfaces';
 import { CommonModule } from '@angular/common';
 import { CryptoService } from '../../services/crypto/crypto.service';
+import { CryptoModalComponent } from '../crypto-modal/crypto-modal.component';
+import { UserService } from '../../services/user/user.service';
+import { getAdditionalUserInfo } from 'firebase/auth';
 
 @Component({
   selector: 'app-crypto-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CryptoModalComponent],
   templateUrl: './crypto-card.component.html',
 })
-export class CryptoCardComponent {
-
-  constructor(private cryptoService: CryptoService) {}
+export class CryptoCardComponent implements OnInit {
+  @ViewChild('cryptoModal') cryptoModal!: CryptoModalComponent;
 
   @Input() crypto: CryptoResponse = {
     id: '',
@@ -42,12 +44,26 @@ export class CryptoCardComponent {
     last_updated: ''
   };
 
+  userEmail: string = '';
+  userBalance: number = 0;
+
+  constructor(private cryptoService: CryptoService, private userService: UserService) {}
+
+  ngOnInit() {
+    this.userEmail = this.getUserEmail();
+    this.userService.getUserBalance(this.userEmail).then(balance => this.userBalance = balance);
+  }
+
+  getUserEmail(): string {
+    return 'a'
+  }
+
   buyCrypto() {
     const payload = {
       email: 'guillermo.casanova.b@gmail.com',
       userBalance: 61743,
       crypto: this.crypto.symbol,
-      amount: 1,
+      cryptoAmount: 1,
       currentPrice: this.crypto.current_price
     }
     this.cryptoService.buyCrypto(payload).subscribe({
@@ -58,6 +74,10 @@ export class CryptoCardComponent {
         console.error('Error processing transaction');
       }
     });
+  }
+
+  openModal() {
+    this.cryptoModal.open();
   }
 
 }
