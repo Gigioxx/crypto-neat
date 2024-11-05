@@ -31,7 +31,7 @@ export class CryptoService {
         } catch (error) {
           observer.error('Error processing transaction');
         }
-      }, 1);
+      }, 3000);
     });
   }
 
@@ -55,7 +55,7 @@ export class CryptoService {
         } catch (error) {
           observer.error('Error processing transaction');
         }
-      }, 1);
+      }, 3000);
     });
   }
 
@@ -94,5 +94,6 @@ export class CryptoService {
       date: new Date().toISOString(),
       quantity: payload.cryptoAmount,
     });
+    console.log('transacción creada');
   }
 }
