@@ -32,6 +32,13 @@ export class NavbarComponent implements OnInit {
     });
   }
 
+  // the session is set to expire after 10 minutes
+  startSessionTimeout() {
+    setTimeout(() => {
+      this.logout();
+    }, 600000); // 10 minutes in milliseconds
+  }
+
   loginWithGoogle() {
     signInWithPopup(auth, provider)
       .then((result) => {

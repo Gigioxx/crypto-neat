@@ -4,6 +4,7 @@
 This is a web application that allows users to login and check cryptocurrency prices. Users can also buy and sell cryptocurrencies and check their transaction history.
 
 The app is also a PWA, so, you can download it and use it.
+The session will expire after 10 mins.
 
 ## Running the application
 To run the application, you need to have Node.js installed on your machine. You can download Node.js from [here](https://nodejs.org/en/).
