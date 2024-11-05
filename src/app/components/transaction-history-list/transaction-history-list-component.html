@@ -1,13 +1,14 @@
-<div class="transaction-history-list">
-  <h2>Transaction History</h2>
-  {{ transactions | json }}
+<div class="transaction-history-list p-4 bg-gray-100 rounded-lg shadow-md">
+  <h2 class="text-2xl font-bold mb-4">Transaction History</h2>
   <ul>
     @for (transaction of transactions; track transaction.date) {
-      <li>
-        <div class="transaction-item">
-          <p><strong>Date:</strong> {{ transaction.date }}</p>
-          <p><strong>Quantity:</strong> {{ transaction.quantity }}</p>
-          <p><strong>Crypto:</strong> {{ transaction.crypto }}</p>
+      <li class="mb-4">
+        <div class="p-4 bg-white rounded-lg shadow-sm">
+          <span class="block text-lg font-medium">{{ transaction.crypto }}</span>
+          <span class="block"><strong>Price:</strong> {{ transaction.price }}</span>
+          <span class="block"><strong>Quantity:</strong> {{ transaction.quantity }}</span>
+          <span class="block"><strong>Date:</strong> {{ transaction.date | date:'MM/dd/yyyy MM:SS' }}</span>
+          <span class="block"><strong>Action:</strong> {{ transaction.action }}</span>
         </div>
       </li>
     }

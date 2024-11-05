@@ -31,7 +31,7 @@ export class UserService {
 
   async getUserTransactions(email: string): Promise<userTransactionsList> {
     const transactions: any[] = [];
-    const usersTransactionsCollection = collection(this.firestore, 'usersTransactions');
+    const usersTransactionsCollection = collection(this.firestore, 'transactionHistory');
     const q = query(usersTransactionsCollection, where('userEmail', '==', email));
     
     const querySnapshot = await getDocs(q);
