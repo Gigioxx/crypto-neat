@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^18.2.10",
     "@angular/platform-server": "^18.2.10",
     "@angular/router": "^18.2.10",
+    "@angular/service-worker": "^18.2.10",
     "@angular/ssr": "^18.2.11",
     "@firebase/firestore": "^4.7.4",
     "autoprefixer": "^10.4.20",

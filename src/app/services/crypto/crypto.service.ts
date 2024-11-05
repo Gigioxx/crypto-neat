@@ -11,10 +11,13 @@ export class CryptoService {
   constructor(private firestore: Firestore) {}
 
   buyCrypto(payload: buySellCryptoPayload): Observable<any> {
+    console.log('1')
     return new Observable(observer => {
+      console.log('2')
       const validationError = this.validateTransaction(payload.userBalance, payload.cryptoAmount, payload.currentPrice, 'buy');
 
       if (validationError) {
+        console.log('3')
         observer.error(validationError);
         return;
       }
@@ -22,14 +25,15 @@ export class CryptoService {
       // Simulate API call with 3s timeout
       setTimeout(async () => {
         try {
+          console.log('4')
           await this.updateUserBalance(payload.email, payload.userBalance - (payload.currentPrice * payload.cryptoAmount));
           await this.createTransaction('buy', payload);
-          console.log('transacción creada');
           
           observer.next({ success: true });
           observer.complete();
         } catch (error) {
           observer.error('Error processing transaction');
+          console.log(error)
         }
       }, 3000);
     });
