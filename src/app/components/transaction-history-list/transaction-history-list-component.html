@@ -5,9 +5,9 @@
       <li class="mb-4">
         <div class="p-4 bg-white rounded-lg shadow-sm">
           <span class="block text-lg font-medium">{{ transaction.crypto }}</span>
-          <span class="block"><strong>Price:</strong> {{ transaction.price }}</span>
+          <span class="block"><strong>Price:</strong> ${{ transaction.price }} USD</span>
           <span class="block"><strong>Quantity:</strong> {{ transaction.quantity }}</span>
-          <span class="block"><strong>Date:</strong> {{ transaction.date | date:'MM/dd/yyyy MM:SS' }}</span>
+          <span class="block"><strong>Date:</strong> {{ transaction.date | date:'dd/MM/yyyy mm:ss' }}</span>
           <span class="block"><strong>Action:</strong> {{ transaction.action }}</span>
         </div>
       </li>
